@@ -1,42 +1,46 @@
+import java.util.Scanner;
 import java.util.Stack;
-
 import javax.swing.JOptionPane;
-
 public class metodos 
 {
-    public void LlenarPila() 
+    Scanner sc = new Scanner(System.in);
+    public Stack<ObjRepuesto> IngresarRepuesto(Stack<ObjRepuesto> pila) 
     {
-        Stack<ObjRepuesto> pila = new Stack<>();
-        boolean continuar = true;
-        String agregar = " ";
-        while (continuar) 
-        {
-            ObjRepuesto o = new ObjRepuesto();
-            o.setMarca(JOptionPane.showInputDialog("Ingrese la marca"));
-            o.setReferencia(Integer.parseInt(JOptionPane.showInputDialog("Ingrese la referencia")));
-            o.setCantidad(Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad")));
-            o.setPrecio(Double.parseDouble(JOptionPane.showInputDialog("Ingrese el precio")));
-            pila.push(o);
-            agregar = JOptionPane.showInputDialog("Desea agregar mas Registros S/N");
-            if (agregar.equalsIgnoreCase("N")) 
-            {
-                JOptionPane.showMessageDialog(null, "Se ha salido ");
-                continuar = false;
-            }
-
+        ObjRepuesto o = new ObjRepuesto();
+        o.setMarca(JOptionPane.showInputDialog("Ingrese la marca"));
+        String entrada;
+        // Validar referencia
+        entrada = JOptionPane.showInputDialog("Ingrese la referencia");
+        while (!entrada.matches("\\d+")) {
+            JOptionPane.showMessageDialog(null, "Error: Debe ingresar un número entero válido.");
+            entrada = JOptionPane.showInputDialog("Ingrese la referencia (número entero):");
         }
+        o.setReferencia(Integer.parseInt(entrada));
+
+        // Validar cantidad
+        entrada = JOptionPane.showInputDialog("Ingrese la cantidad");
+        while (!entrada.matches("\\d+")) {
+            JOptionPane.showMessageDialog(null, "Error: Debe ingresar un número entero válido.");
+            entrada = JOptionPane.showInputDialog("Ingrese la cantidad (número entero):");
+        }
+        o.setCantidad(Integer.parseInt(entrada));
+        
+        // Validar precio
+        entrada = JOptionPane.showInputDialog("Ingrese el precio");
+        while (!entrada.matches("\\d+(\\.\\d+)?")) {
+            JOptionPane.showMessageDialog(null, "Error: Debe ingresar un número válido.");
+            entrada = JOptionPane.showInputDialog("Ingrese el precio (número válido):");
+        }
+        o.setPrecio(Double.parseDouble(entrada));
+        pila.push(o);
+        JOptionPane.showMessageDialog(null, "Repuesto ingresado correctamente");
         MostrarPila(pila);
-        int opt = Integer.parseInt(JOptionPane.showInputDialog("-------- MENU ---------\n" +
-                                                               "1.Ingresa Repuesto\n" +
-                                                               "2.Buscar Repuesto\n" +
-                                                               "3.Modificar Repuesto\n" +
-                                                               "4.Eliminar Repuesto\n"));
-        pila = AccionesRegistro(pila, opt);
-        MostrarPila(pila);
+        return pila;
     }
     public void MostrarPila(Stack<ObjRepuesto> pila) 
     {
-        for (ObjRepuesto o : pila) {
+        for (ObjRepuesto o : pila) 
+        {
             System.out.println("Marca: " + o.getMarca());
             System.out.println("Referencia: " + o.getReferencia());
             System.out.println("Cantidad: " + o.getCantidad());
@@ -44,32 +48,131 @@ public class metodos
             System.out.println();
         }
     }
-    public Stack<ObjRepuesto> AccionesRegistro(Stack<ObjRepuesto> pila, int opt) {
-        String dato = "";
-        if (opt == 1) {
-            dato = JOptionPane.showInputDialog("Ingrese el registro a consultar");
-        } else if (opt == 2) {
-            dato = JOptionPane.showInputDialog("Ingrese el registro al que desea eliminar");
-        } else {
-            dato = JOptionPane.showInputDialog("Ingrese el registro al que desea Modificar");
+    public void BuscarRepuesto(Stack<ObjRepuesto> pila)
+    {
+        while (pila == null || pila.isEmpty()) 
+        {
+            JOptionPane.showMessageDialog(null, "No hay repuestos ingresados");
+            return;
         }
-        for (Vehiculo vehiculo : pila) {
-            if (vehiculo.getMarca().equalsIgnoreCase(dato)) {
-                if (opt == 1) {
-                    System.out.println(
-                            "el registro se encuentras y es: " + vehiculo.getMarca() + " " + vehiculo.getPrecio());
-                } else if (opt == 2) {
-                    pila.remove(vehiculo);
-                } else {
-                    vehiculo.setMarca(JOptionPane.showInputDialog("Ingrese La marca"));
-
+        System.out.println("--CONSULTAR-- \n" + "1.Por Marca\n" + "2.Por Referencia\n");
+        int opt = sc.nextInt();
+        String dato = "";
+        int dato2 = 0;
+        if (opt == 1) 
+        {
+            System.out.println("Ingrese la marca a consultar");
+            dato = sc.next();
+        } else 
+        {
+            System.out.println("Ingrese la referencia a consultar");
+            dato2 = sc.nextInt();
+        }
+        for (ObjRepuesto repuesto : pila) 
+        { 
+            if(opt == 1)
+            {
+                if (repuesto.getMarca().equalsIgnoreCase(dato)) 
+                {
+                    System.out.println("REPUESTO ENCONTRADO\n" +
+                                    "Marca: " + repuesto.getMarca() + "\n" +
+                                    "Referencia: " + repuesto.getReferencia() + "\n" +
+                                    "Cantidad: " + repuesto.getCantidad() + "\n" +
+                                    "Precio: " + repuesto.getPrecio() + "\n");
+                } 
+                else
+                {
+                    System.out.println("Repuesto no encontrado");
+                }
+            }
+            else
+            {
+                if (repuesto.getReferencia() == dato2) 
+                {
+                    System.out.println("REPUESTO ENCONTRADO\n" +
+                                    "Marca: " + repuesto.getMarca() + "\n" +
+                                    "Referencia: " + repuesto.getReferencia() + "\n" +
+                                    "Cantidad: " + repuesto.getCantidad() + "\n" +
+                                    "Precio: " + repuesto.getPrecio() + "\n");
+                } 
+                else
+                {
+                    System.out.println("Repuesto no encontrado");
                 }
             }
         }
-
-        return pila;
-
     }
-
-    
+    public void ModificarRepuesto(Stack<ObjRepuesto> pila) 
+    {
+        while (pila == null || pila.isEmpty()) 
+        {
+            JOptionPane.showMessageDialog(null, "No hay repuestos ingresados");
+            return;
+        }
+        System.out.println("Ingrese la referencia del repuesto a modificar");
+        int ref = sc.nextInt();
+        for (ObjRepuesto repuesto : pila) 
+        {
+            if (repuesto.getReferencia() == ref) 
+            {
+                System.out.println("---MODIFICAR--- \n" + "1.Marca\n" + "2.Referencia\n" + "3.Cantidad\n" + "4.Precio\n");
+                int opt = sc.nextInt();
+                switch (opt) 
+                {
+                    case 1:
+                        System.out.println("Ingrese la nueva marca");
+                        repuesto.setMarca(sc.next());
+                        break;
+                    case 2:
+                        System.out.println("Ingrese la nueva referencia");
+                        repuesto.setReferencia(sc.nextInt());
+                        break;
+                    case 3:
+                        System.out.println("Ingrese la nueva cantidad");
+                        repuesto.setCantidad(sc.nextInt());
+                        break;
+                    case 4:
+                        System.out.println("Ingrese el nuevo precio");
+                        repuesto.setPrecio(sc.nextDouble());
+                        break;
+                    default:
+                        System.out.println("Opcion no valida");
+                        break;
+                }
+                System.out.println("Repuesto modificado correctamente");
+                return;
+            }
+            else
+            {
+                System.out.println("Repuesto no encontrado");
+                return;
+            }
+        }
+    }
+    public void EliminarRepuesto(Stack<ObjRepuesto> pila) 
+    {
+        while (pila == null || pila.isEmpty()) 
+        {
+            JOptionPane.showMessageDialog(null, "No hay repuestos ingresados");
+            return;
+        }
+        System.out.println("Ingrese la referencia del repuesto a eliminar");
+        int ref = sc.nextInt();
+        for (ObjRepuesto repuesto : pila) 
+        {
+            if (repuesto.getReferencia() == ref) 
+            {
+                pila.remove(repuesto);
+                System.out.println("Repuesto eliminado correctamente");
+                return;
+            }
+            else
+            {
+                System.out.println("Repuesto no encontrado");
+                return;
+            }
+        }
+    }
 }
+    
+
