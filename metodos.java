@@ -50,7 +50,7 @@ public class metodos
     }
     public void BuscarRepuesto(Stack<ObjRepuesto> pila)
     {
-        while (pila == null || pila.isEmpty()) 
+        while (pila.isEmpty()) 
         {
             JOptionPane.showMessageDialog(null, "No hay repuestos ingresados");
             return;
@@ -104,7 +104,7 @@ public class metodos
     }
     public void ModificarRepuesto(Stack<ObjRepuesto> pila) 
     {
-        while (pila == null || pila.isEmpty()) 
+        while (pila.isEmpty()) 
         {
             JOptionPane.showMessageDialog(null, "No hay repuestos ingresados");
             return;
@@ -151,7 +151,7 @@ public class metodos
     }
     public void EliminarRepuesto(Stack<ObjRepuesto> pila) 
     {
-        while (pila == null || pila.isEmpty()) 
+        while (pila.isEmpty()) 
         {
             JOptionPane.showMessageDialog(null, "No hay repuestos ingresados");
             return;
