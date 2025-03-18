@@ -9,7 +9,7 @@ public class principal
         int vrUsu; 
         do 
         {
-            vrUsu = Integer.parseInt(JOptionPane.showInputDialog("-------- MENU --------\n" +
+            vrUsu = Integer.parseInt(JOptionPane.showInputDialog("---------- MENU ----------\n" +
                                                                  "1.Ingresar Repuesto\n" +
                                                                  "2.Buscar Repuesto\n" +
                                                                  "3.Modificar Repuesto\n" +

@@ -111,10 +111,12 @@ public class metodos
         }
         System.out.println("Ingrese la referencia del repuesto a modificar");
         int ref = sc.nextInt();
+        boolean encontrado = false;
         for (ObjRepuesto repuesto : pila) 
         {
             if (repuesto.getReferencia() == ref) 
             {
+                encontrado = true;
                 System.out.println("---MODIFICAR--- \n" + "1.Marca\n" + "2.Referencia\n" + "3.Cantidad\n" + "4.Precio\n");
                 int opt = sc.nextInt();
                 switch (opt) 
@@ -139,14 +141,18 @@ public class metodos
                         System.out.println("Opcion no valida");
                         break;
                 }
-                System.out.println("Repuesto modificado correctamente");
+                System.out.println("REPUESTO MODIFICADO\n" +
+                                    "Marca: " + repuesto.getMarca() + "\n" +
+                                    "Referencia: " + repuesto.getReferencia() + "\n" +
+                                    "Cantidad: " + repuesto.getCantidad() + "\n" +
+                                    "Precio: " + repuesto.getPrecio() + "\n");
                 return;
             }
-            else
-            {
-                System.out.println("Repuesto no encontrado");
-                return;
-            }
+        }
+        if (!encontrado) 
+        {
+            System.out.println("Repuesto no encontrado");
+            return;
         }
     }
     public void EliminarRepuesto(Stack<ObjRepuesto> pila) 
@@ -158,20 +164,24 @@ public class metodos
         }
         System.out.println("Ingrese la referencia del repuesto a eliminar");
         int ref = sc.nextInt();
+        boolean encontrado = false;
         for (ObjRepuesto repuesto : pila) 
         {
             if (repuesto.getReferencia() == ref) 
             {
+                encontrado = true;
                 pila.remove(repuesto);
-                System.out.println("Repuesto eliminado correctamente");
-                return;
-            }
-            else
-            {
-                System.out.println("Repuesto no encontrado");
+                System.out.println("REPUESTO ELIMINADO");
+                MostrarPila(pila);
                 return;
             }
         }
+        if (!encontrado) 
+        {
+            System.out.println("Repuesto no encontrado");
+            return;
+        }
+        
     }
 }
     
