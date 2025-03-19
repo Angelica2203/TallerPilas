@@ -46,7 +46,7 @@ public class principal
                     met.EliminarRepuesto(pila);
                     break;
                 case 5:
-                    
+                    met.VenderRepuesto(pila);
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "El programa ha terminado");

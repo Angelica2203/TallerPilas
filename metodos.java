@@ -53,6 +53,7 @@ public class metodos
         while (pila.isEmpty()) 
         {
             JOptionPane.showMessageDialog(null, "No hay repuestos ingresados");
+            //pila = IngresarRepuesto(pila); //para llevarlo a ingresar repuesto
             return;
         }
         System.out.println("--CONSULTAR-- \n" + "1.Por Marca\n" + "2.Por Referencia\n");
@@ -182,6 +183,43 @@ public class metodos
             return;
         }
         
+    }
+    public void VenderRepuesto(Stack<ObjRepuesto> pila) 
+    {
+        while (pila.isEmpty()) 
+        {
+            JOptionPane.showMessageDialog(null, "No hay repuestos ingresados");
+            return;
+        }
+        System.out.println("Ingrese la referencia del repuesto a vender");
+        int ref = sc.nextInt();
+        boolean encontrado = false;
+        for (ObjRepuesto repuesto : pila) 
+        {
+            if (repuesto.getReferencia() == ref) 
+            {
+                encontrado = true;
+                System.out.println("Ingrese la cantidad a vender");
+                int cant = sc.nextInt();
+                if (cant > repuesto.getCantidad()) 
+                {
+                    System.out.println("No hay suficiente cantidad para vender");
+                    return;
+                }
+                repuesto.setCantidad(repuesto.getCantidad() - cant);
+                System.out.println("VENTA REALIZADA\n" + 
+                                   "Marca: " + repuesto.getMarca() + "\n" +
+                                    "Referencia: " + repuesto.getReferencia() + "\n" +
+                                    "Cantidad: " + repuesto.getCantidad() + "\n" +
+                                    "Precio: " + repuesto.getPrecio() + "\n");
+                return;
+            }
+        }
+        if (!encontrado) 
+        {
+            System.out.println("Repuesto no encontrado");
+            return;
+        }
     }
 }
     
